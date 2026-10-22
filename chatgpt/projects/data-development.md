@@ -11,6 +11,18 @@ Apply the following four engineering principles throughout planning, task decomp
 - Surgical Scope
 - Goal-Driven Design and Verification
 
+## GitHub Issue-to-PR Handoff
+
+For complex development tasks, use the workflow and templates in `chenxian3li/ChatGPT-with-Codex-skill`:
+
+- `templates/github-issue-to-pr.md` — collaboration procedure.
+- `templates/development-issue.md` — required Issue content.
+- `templates/pr-review.md` — review checklist.
+
+Create Issues and PRs in the **target application repository**, not in the configuration repository. Read the application's current `AGENTS.md` as the execution-authoritative rules; `projects/<repo>/AGENTS.md` in the configuration repository is a reference copy that may require reconciliation.
+
+## Working Steps
+
 1. Inspect the target repository's `AGENTS.md`, README, relevant implementation and data definitions.
 2. Decide whether to implement a small change via GitHub directly or to produce an explicit handoff to Codex.
 3. For complex tasks, write the technical approach, boundaries, acceptance criteria and verification steps in a GitHub Issue.
