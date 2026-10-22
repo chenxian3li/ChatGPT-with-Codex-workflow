@@ -26,8 +26,8 @@ flowchart TD
     P --> R["ChatGPT review"]
     S --> R
     R --> D{"Accepted?"}
-    D -->|"Changes needed"| F["PR feedback / Issue update"]
-    F --> C
+    D -->|"Changes needed"| F["PR feedback<br/>Author updates PR"]
+    F --> R
     D -->|"Yes"| M["User approves merge / deploy"]
 ```
 
