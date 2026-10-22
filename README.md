@@ -6,32 +6,39 @@ A modular instruction kit for a **ChatGPT-led development workflow**. ChatGPT ha
 
 ## Roles and architecture
 
-| Actor | Responsibility |
-| --- | --- |
-| **ChatGPT** | **Tech Lead · Data Architect · Code Reviewer** — analyze, design, split tasks, define acceptance criteria, review delivery. |
-| **Codex** | **Implementation Engineer** — follow scoped instructions, change code, test, open/update PRs. |
-| **GitHub** | **Source of truth and communication channel** — version instructions and code; connect agents using Issues and PRs. |
-| **User** | Set goals, resolve key decisions, approve merge and deployment. |
+<table>
+  <tbody>
+    <tr>
+      <td width="50%" valign="top">
+        <h3>🧠 ChatGPT</h3>
+        <p><sub>Tech Lead · Data Architect · Code Reviewer</sub></p>
+        <p>Owns requirements, repository analysis, technical design, task breakdown, acceptance criteria, and PR review.</p>
+      </td>
+      <td width="50%" valign="top">
+        <h3>💻 Codex</h3>
+        <p><sub>Software Engineer · Executor</sub></p>
+        <p>Implements scoped GitHub Issues and <code>AGENTS.md</code> rules, runs tests, addresses feedback, and creates PRs.</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top">
+        <h3>🐙 GitHub</h3>
+        <p><sub>Source of Truth · Communication Channel</sub></p>
+        <p>Stores instructions, project documentation, and code. Issues communicate implementation tasks; PRs, review comments, and CI results carry feedback and verification evidence.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+**User:** Defines goals and approves merges and deployments.
 
 ## Development workflow
 
-```mermaid
-flowchart TD
-    U["User request"] --> G["ChatGPT<br/>Inspect and design"]
-    G --> Q{"Simple change?"}
-    Q -->|"Yes"| S["ChatGPT implements<br/>and opens PR"]
-    Q -->|"No, hand off to Codex"| I["GitHub Issue<br/>Design + acceptance criteria"]
-    I --> C["Codex<br/>Read Issue and AGENTS.md<br/>Implement + test"]
-    C --> P["GitHub PR<br/>Diff + test evidence"]
-    P --> R["ChatGPT review"]
-    S --> R
-    R --> D{"Accepted?"}
-    D -->|"Changes needed"| F["PR feedback<br/>Author updates PR"]
-    F --> R
-    D -->|"Yes"| M["User approves merge / deploy"]
-```
+**Simple changes:** ChatGPT may implement directly on a feature branch and open a PR for review.
 
-The [Issue-to-PR module](templates/github-issue-to-pr.md) enables this handoff in a ChatGPT Project. **It is not automated:** ChatGPT creates the Issue in the application repository, the user starts Codex with that Issue, and ChatGPT reviews the resulting PR.
+**Codex handoff:** **ChatGPT designs → GitHub Issue → Codex implements & tests → GitHub PR → ChatGPT reviews → User approves.**
+
+The [Issue-to-PR module](templates/github-issue-to-pr.md) provides reusable instructions for this handoff. It is **not automated**: ChatGPT creates the Issue in the application repository, and Codex requires an explicit kickoff and GitHub access.
 
 ## Instruction layers
 
