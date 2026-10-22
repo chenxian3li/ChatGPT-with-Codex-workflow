@@ -50,7 +50,7 @@ Stay within scope, run relevant tests, and open a PR linked to the Issue.
 
 ## Instruction layers
 
-| Scope | Canonical file | Applied in |
+| Scope | Reference file | Applied in |
 | --- | --- | --- |
 | ChatGPT global principles | [`chatgpt/global.md`](chatgpt/global.md) | ChatGPT Custom Instructions |
 | ChatGPT development role and handoff | [`chatgpt/projects/data-development.md`](chatgpt/projects/data-development.md) | ChatGPT Project Instructions |
