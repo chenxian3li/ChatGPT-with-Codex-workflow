@@ -1,118 +1,62 @@
-# ChatGPT with Codex — Development Collaboration Framework
+# ChatGPT with Codex
 
-A **ChatGPT-led development workflow** that separates technical leadership from code execution. GitHub acts as the **source of truth and communication channel**, not as a decision-making agent.
+**ChatGPT designs. Codex builds. GitHub connects them.**
 
-> Status: **Architecture scaffold / draft templates**. Instructions in this repository are starting points; they are **not automatically synchronized** to ChatGPT settings or local Codex configuration.
+A reusable, GitHub-centered development workflow for software and data engineering. ChatGPT handles the thinking-intensive work so Codex can execute well-scoped tasks efficiently. This repository is an **instruction and workflow kit**, not an autonomous agent or executable skill.
 
-## 1. Roles and responsibilities
+## Responsibilities
 
-```mermaid
-flowchart TB
-    U["User<br/>Business goals and approval"]
-    G["ChatGPT<br/>Tech Lead · Data Architect · Code Reviewer<br/>Requirements, design, task breakdown, acceptance, review"]
-    C["Codex<br/>Software Engineer · Executor<br/>Implementation, tests, fixes, PRs"]
-    H[("GitHub<br/>Source of Truth + Communication<br/>Docs · AGENTS.md · Issues · PRs · CI")]
-    U -->|"Request / prioritization"| G
-    G -->|"Issue: implementation contract"| H
-    H -->|"Issue + repository instructions"| C
-    C -->|"Commits, PR, test evidence"| H
-    H -->|"Diff, review context, CI"| G
-    G -->|"Review / feedback"| H
-    G -->|"Recommendation"| U
-    U -->|"Merge / deployment decision"| H
-```
+| Actor | Responsibility |
+| --- | --- |
+| **ChatGPT** | **Tech Lead · Data Architect · Code Reviewer** — understand requirements, inspect repositories, design solutions, split tasks, define acceptance criteria, and review PRs. |
+| **Codex** | **Implementation Engineer** — follow the Issue and `AGENTS.md`, implement changes, run tests, resolve review feedback, and open PRs. |
+| **GitHub** | **Source of truth and communication channel** — store instructions, code, Issues, PRs, and CI evidence. |
+| **User** | Define goals, resolve key decisions, and approve merges or deployments. |
 
-**Decision boundary:** ChatGPT proposes design and reviews delivery; Codex executes within the agreed scope, validates against real code, and flags blockers rather than silently changing architecture. The user controls final merge and deployment.
-
-## 2. Standard development workflow
+## Workflow
 
 ```mermaid
 flowchart TD
-    A["User submits a request"] --> B["ChatGPT inspects repository and requirements"]
-    B --> D{"Scope and risk?"}
-    D -->|"Simple, contained change"| E["ChatGPT + GitHub<br/>Edit on feature branch, create PR"]
-    D -->|"Complex or multi-file change"| F["ChatGPT drafts technical design<br/>Acceptance criteria + non-goals"]
-    F --> G["GitHub Issue<br/>Persistent handoff contract"]
-    G --> H["Codex reads Issue and AGENTS.md<br/>Implements + verifies + creates PR"]
-    E --> I["ChatGPT reviews PR<br/>Diff + acceptance criteria + CI"]
-    H --> I
-    I --> J{"Accepted?"}
-    J -->|"Changes needed"| K["Review comments / Issue updates"]
-    K --> H
-    J -->|"Yes"| L["User approves merge / deployment"]
+    U["User request"] --> G["ChatGPT<br/>Inspect, design, define acceptance criteria"]
+    G --> Q{"Small, contained change?"}
+    Q -->|"Yes"| S["ChatGPT implements<br/>and opens PR"]
+    Q -->|"No"| I["GitHub Issue<br/>Design, scope, non-goals, acceptance criteria"]
+    I --> C["Codex<br/>Read Issue + AGENTS.md<br/>Implement and test"]
+    C --> P["GitHub PR<br/>Changes + test evidence + Issue link"]
+    S --> R["ChatGPT reviews PR<br/>against requirements and CI"]
+    P --> R
+    R --> D{"Accepted?"}
+    D -->|"Changes needed"| F["PR comments / updated Issue"]
+    F --> C
+    D -->|"Yes"| M["User decides merge / deploy"]
 ```
 
-For small requests, a GitHub Issue is optional; a PR still provides an auditable record. For complex requests, write the design **before** handing execution to Codex.
+### GitHub is the handoff protocol
 
-## 3. Layered instructions architecture
+1. **ChatGPT → GitHub Issue:** ChatGPT writes a concrete implementation contract using the [development Issue template](templates/development-issue.md).
+2. **Issue → Codex:** Codex reads the Issue and target repository's `AGENTS.md`, implements on a branch, validates the acceptance criteria, and creates a PR linked to the Issue.
+3. **PR → ChatGPT:** ChatGPT reviews the actual diff and test evidence using the [PR review checklist](templates/pr-review.md). Feedback goes into PR comments; material scope changes go back into the Issue.
+4. **Approval:** The user owns the final merge and deployment decision.
 
-```mermaid
-flowchart TB
-    subgraph GPT["ChatGPT"]
-      CG["Custom Instructions<br/>Personal, cross-conversation guidance"]
-      CP["Project Instructions<br/>Tech Lead workflow and project-domain behavior"]
-      CG -. "general preferences" .-> CP
-    end
-    subgraph CDX["Codex"]
-      CA["~/.codex/AGENTS.md<br/>General coding and execution principles"]
-      RA["Repository AGENTS.md<br/>Project-specific constraints"]
-      CA --> RA
-    end
-    SO[("GitHub repositories<br/>Canonical instruction files, project docs and code")]
-    SO -->|"Manually sync/copy settings"| CG
-    SO -->|"Manually sync/copy settings"| CP
-    SO -->|"Install or sync local global file"| CA
-    SO -->|"Versioned in each code repository"| RA
-    CP -->|"Read relevant repo rules via GitHub"| RA
-```
-
-**Separation of concerns:**
-
-| Location | Owns | Does not own |
-| --- | --- | --- |
-| ChatGPT global Custom Instructions | Personal preferences, high-level communication style | Repository-specific schemas and test commands |
-| ChatGPT Project Instructions | Tech Lead / Data Architect / Reviewer workflow | One-off implementation tasks |
-| Codex global `~/.codex/AGENTS.md` | General engineering practices and verification habits | Specific business metric definitions |
-| Per-project `AGENTS.md` | Actual project boundaries, authoritative docs, tests | Duplicated universal philosophy |
-| GitHub Issue | A single task's design, constraints and acceptance criteria | Permanent project policy |
-| GitHub PR | Implementation, test evidence, review discussion | Unreviewed production authorization |
-
-Project-level rules in GitHub must stay with their **own code repository**. This configuration repository stores a reusable template, not a second copy of every project's rules.
-
-## 4. Repository layout
+Example instruction to Codex once an Issue exists:
 
 ```text
-ChatGPT-with-Codex-skill/
-├── README.md
-├── chatgpt/
-│   ├── global.md
-│   └── projects/
-│       └── data-development.md
-├── codex/
-│   └── AGENTS.md
-├── templates/
-│   ├── repository-AGENTS.md
-│   ├── development-issue.md
-│   └── pr-review.md
-└── docs/
-    ├── architecture.md
-    └── workflow.md
+Implement issue #42 in owner/repo.
+Read the Issue and repository AGENTS.md.
+Stay within scope, run relevant tests, and open a PR linked to the Issue.
 ```
 
-## 5. How to use
+**Important:** This is a documented workflow, not automatic agent-to-agent messaging. ChatGPT must create the Issue, and Codex needs authenticated GitHub access and an explicit task to read it.
 
-1. Review the instructions in `chatgpt/global.md` and `chatgpt/projects/data-development.md`, then paste them into their corresponding ChatGPT settings. They **do not auto-sync**.
-2. Review `codex/AGENTS.md` and install it as `~/.codex/AGENTS.md` on your Mac. Its contents should not replace a repository's own `AGENTS.md`.
-3. For each coding repository, adapt `templates/repository-AGENTS.md` into that repository's `AGENTS.md`.
-4. For substantial changes, create an Issue using `templates/development-issue.md`. Codex reads the Issue, implements it on a branch, tests, and opens a PR.
-5. ChatGPT reviews the PR using `templates/pr-review.md`. The user decides whether to merge or deploy.
+## Instruction layers
 
-See [Architecture](docs/architecture.md) and [Workflow](docs/workflow.md) for details.
+| Scope | Canonical file | Applied in |
+| --- | --- | --- |
+| ChatGPT global principles | [`chatgpt/global.md`](chatgpt/global.md) | ChatGPT Custom Instructions |
+| ChatGPT development role and handoff | [`chatgpt/projects/data-development.md`](chatgpt/projects/data-development.md) | ChatGPT Project Instructions |
+| Codex global engineering rules | [`codex/AGENTS.md`](codex/AGENTS.md) | Local `~/.codex/AGENTS.md` |
+| Application-specific rules | [`templates/repository-AGENTS.md`](templates/repository-AGENTS.md) | `AGENTS.md` in each application repository |
 
-## 6. Working principles
+Global configuration is maintained here; **each application repository owns its actual project `AGENTS.md` and business definitions**. Copy or sync the relevant settings explicitly—GitHub edits do not automatically update ChatGPT or local Codex.
 
-- **ChatGPT leads the design; Codex executes the specification.**
-- **GitHub retains decisions and evidence** through Issues, PRs, docs and code.
-- **Instructions describe durable policy; Issues describe individual tasks.**
-- **Verification is evidence-based:** never claim tests ran if they did not.
-- **Cost optimization is a goal, not permission to skip safety or correctness.**
+For implementation details, see [Architecture](docs/architecture.md) and [Development Workflow](docs/workflow.md).
