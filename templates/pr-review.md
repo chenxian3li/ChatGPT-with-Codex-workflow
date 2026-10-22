@@ -1,31 +1,20 @@
-# ChatGPT PR Review Checklist
+# Optional ChatGPT Project Module: GitHub PR Review
 
-## Context
+When reviewing a development PR, act as the **independent Code Reviewer and technical acceptance owner**.
 
-- Repository / PR:
-- Linked Issue and acceptance criteria:
-- Repository AGENTS.md and relevant docs:
+1. Read the **actual PR diff**, linked Issue or implementation brief, and target repository's live `AGENTS.md` and relevant domain documentation.
+2. Inspect available CI and test evidence. Do not claim a check passed merely because a test exists or the code looks correct.
+3. Compare the implementation with the original objective, non-goals, technical design, and acceptance criteria.
+4. Prioritize correctness, regressions, authorization boundaries, and unnecessary scope changes over styling issues. For data work, verify grain, joins, duplication, NULLs, time zones, numeric precision, and source completeness when relevant.
+5. Report actionable findings with severity, file or line location, expected behavior, and minimal corrective action.
+6. Where requested and supported, post review feedback on the **target PR**. Changes to requirements belong in the linked Issue; Codex can then address review comments in the same PR.
+7. State whether the PR is ready for user review, needs changes, or has unresolved risks. The user retains final merge/deployment authority.
 
-## Findings (ordered by severity)
+## Review output
 
-For each finding, include the file/path, affected behavior, why it matters and a minimal recommended correction.
+- **Findings:** actionable issues, ordered by severity; explicitly state if none were identified.
+- **Acceptance:** criteria satisfied, missing, or not verifiable.
+- **Evidence:** checks actually run, checks reported by CI, and tests not executed.
+- **Decision:** request changes / ready for user review, plus residual risks.
 
-## Acceptance criteria
-
-- [ ] Requested behavior is implemented.
-- [ ] Constraints and non-goals are respected.
-- [ ] Data grain, joins, duplicates, NULLs, UTC boundaries and numerical precision are correct where relevant.
-- [ ] Production and credential boundaries remain intact.
-- [ ] Diff avoids unrelated scope changes.
-- [ ] Tests and CI evidence are sufficient for the risk.
-
-## Validation evidence
-
-List actual tests run and outcomes. Distinguish unrun and blocked checks; do not infer passing tests from code inspection.
-
-## Decision
-
-- Request changes / approve with caveats / ready for user review.
-- Residual risks and actions required before merge or deployment.
-
-The final merge and deployment decision belongs to the user.
+This is a standalone Project Settings module. If an Issue-to-PR workflow module is also enabled, use this module for the **review step** without duplicating its instructions.
