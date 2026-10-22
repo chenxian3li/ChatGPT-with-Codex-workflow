@@ -35,6 +35,14 @@ The [Issue-to-PR module](templates/github-issue-to-pr.md) enables this handoff i
 
 ## Instruction layers
 
+**The `chatgpt/` directory stores the source text for ChatGPT's Instructions settings:**
+
+- **`chatgpt/global.md`** → ChatGPT **Custom Instructions** (account-wide guidance).
+- **`chatgpt/projects/*.md`** → **Project Settings → Instructions** for the corresponding ChatGPT Project (project-specific roles and rules).
+- **`templates/*.md`** → **optional, standalone instruction modules** that you can add to or combine with a Project's Instructions as needed. They are not separate ChatGPT Projects.
+
+These GitHub files are maintained as configuration references. **They do not automatically load or sync into ChatGPT**; copy the selected text into the appropriate settings.
+
 | Layer | Location | Purpose |
 | --- | --- | --- |
 | ChatGPT global | [`chatgpt/global.md`](chatgpt/global.md) | Cross-conversation engineering principles |
