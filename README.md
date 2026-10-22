@@ -33,6 +33,8 @@ flowchart TD
 
 ### GitHub is the handoff protocol
 
+See the [Issue-to-PR workflow](templates/github-issue-to-pr.md) for the complete procedure.
+
 1. **ChatGPT → GitHub Issue:** ChatGPT writes a concrete implementation contract using the [development Issue template](templates/development-issue.md).
 2. **Issue → Codex:** Codex reads the Issue and target repository's `AGENTS.md`, implements on a branch, validates the acceptance criteria, and creates a PR linked to the Issue.
 3. **PR → ChatGPT:** ChatGPT reviews the actual diff and test evidence using the [PR review checklist](templates/pr-review.md). Feedback goes into PR comments; material scope changes go back into the Issue.
@@ -55,8 +57,8 @@ Stay within scope, run relevant tests, and open a PR linked to the Issue.
 | ChatGPT global principles | [`chatgpt/global.md`](chatgpt/global.md) | ChatGPT Custom Instructions |
 | ChatGPT development role and handoff | [`chatgpt/projects/data-development.md`](chatgpt/projects/data-development.md) | ChatGPT Project Instructions |
 | Codex global engineering rules | [`codex/AGENTS.md`](codex/AGENTS.md) | Local `~/.codex/AGENTS.md` |
-| Application-specific rules | [`templates/repository-AGENTS.md`](templates/repository-AGENTS.md) | `AGENTS.md` in each application repository |
+| Project rules (reference copies) | [`projects/`](projects/) · [starter template](templates/repository-AGENTS.md) | Each application's own `AGENTS.md` is what Codex reads |
 
-Global configuration is maintained here; **each application repository owns its actual project `AGENTS.md` and business definitions**. Copy or sync the relevant settings explicitly—GitHub edits do not automatically update ChatGPT or local Codex.
+Global configurations and project-rule snapshots are organized here. **Each application repository's `AGENTS.md` remains authoritative for execution.** Copies in `projects/` need manual reconciliation; GitHub edits do not automatically update ChatGPT or local Codex.
 
-For implementation details, see [Architecture](docs/architecture.md) and [Development Workflow](docs/workflow.md).
+For implementation details, see [Architecture](docs/architecture.md). Reusable Issue, PR-review and handoff materials live in [`templates/`](templates/).
