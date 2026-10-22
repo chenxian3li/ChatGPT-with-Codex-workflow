@@ -17,9 +17,11 @@ Move expensive exploratory reasoning, design and review to ChatGPT. Give Codex a
 - ChatGPT Project Instructions: specific planning and reviewing behavior.
 - Codex global AGENTS.md: common implementation principles.
 - Application repository AGENTS.md: authoritative project constraints and pointers to definitions and verification.
+- `projects/<repo>/AGENTS.md`: centrally organized reference copies of application AGENTS.md files; verify against the live application repository.
 - Issue and PR: task-specific handoff and result/evidence, **not** enduring policy.
+- `templates/github-issue-to-pr.md`: the handoff procedure; `templates/development-issue.md` and `templates/pr-review.md` provide reusable formats.
 
-This configuration repository is the **source of truth for shared configuration templates**. Each application's own repository remains the **source of truth for its AGENTS.md and domain contracts**.
+This configuration repository is the **source of truth for shared configuration and workflow templates**, and holds reference copies of project AGENTS.md files in `projects/`. Each application's own repository remains the **execution-authoritative source for its AGENTS.md and domain contracts**. Copies are not automatically synchronized.
 
 ## Ownership boundaries
 
