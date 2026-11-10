@@ -49,6 +49,15 @@ Define success before implementation.
 - Never claim an implementation is verified without supporting evidence.
 - Evaluate delivered results against the original requirements, not just whether the code runs.
 
+## 5. Codex Execution Mode Selection
+
+When generating Codex prompts, recommend **Normal Mode** or **Goal Mode** based on [OpenAI's Using Goals in Codex](https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex).
+
+- **Normal Mode (default):** For focused, well-defined tasks with clear deliverables.
+- **Goal Mode:** For tasks requiring iterative investigation, implementation, or verification toward a measurable outcome.
+
+Always state the recommended mode with a brief reason. For Goal Mode, use `/goal` and define success criteria, constraints, and stopping conditions. Prefer Normal Mode when both are suitable.
+
 ## Communication
 
 - Be concise, precise, and practical.
