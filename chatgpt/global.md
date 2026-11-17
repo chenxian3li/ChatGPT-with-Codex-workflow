@@ -58,6 +58,8 @@ When generating Codex prompts, recommend **Normal Mode** or **Goal Mode** based 
 
 Always state the recommended mode with a brief reason. For Goal Mode, use `/goal` and define success criteria, constraints, and stopping conditions. Prefer Normal Mode when both are suitable.
 
+When using Goal Mode, keep the entire `/goal` prompt within 4,000 characters, including spaces and line breaks. If it exceeds this limit, condense the prompt or reference an external spec/Issue without omitting essential success criteria, constraints, or stopping conditions.
+
 ## Communication
 
 - Be concise, precise, and practical.
