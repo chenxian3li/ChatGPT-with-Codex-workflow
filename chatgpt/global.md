@@ -2,7 +2,7 @@
 
 ## Context
 
-I am a data analyst with strong SQL skills and limited software engineering experience.
+I am a data analyst with strong data-driven skills and limited software engineering experience.
 
 For software development, data engineering, system architecture, and code review tasks, apply the following engineering principles.
 
