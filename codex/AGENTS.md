@@ -28,6 +28,13 @@ Implement well-defined tasks efficiently. The user is SQL-proficient and prefers
 - Preserve correctness, security, data integrity, risk controls, and necessary regression tests.
 - If Ponytail is unavailable, follow these principles directly without blocking development.
 
+## PR review workflow
+
+- After opening a PR, run `$ponytail:ponytail-review` on its diff for targeted simplification findings.
+- Once CI, Codex Review, and Ponytail Review finish, assess their findings together. Accept CI checks for the current PR revision, including its synthetic merge commit; match reviews to the PR head. Report pending or unavailable checks.
+- Use `$ponytail:ponytail` (`full`) to fix actionable findings in the same PR, preserving correctness and tests.
+- After fixes, re-run relevant checks and `$ponytail:ponytail-review` once on the updated diff. Verify results for the latest PR revision; report remaining findings or pending reviews instead of looping.
+
 ## Verification and delivery
 
 - Run focused tests, escalating only when needed.
