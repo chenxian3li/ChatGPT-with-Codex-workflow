@@ -20,6 +20,14 @@ Implement well-defined tasks efficiently. The user is SQL-proficient and prefers
 - Do not expose credentials or commit secrets.
 - Do not perform destructive production operations without explicit authorization.
 
+### Ponytail Development Principles
+
+- Use `ponytail full` by default for implementation, bug fixes, and refactoring when the skill is installed and available.
+- Investigate the relevant code and root cause before choosing the simplest correct implementation.
+- Prefer existing code and standard libraries over new abstractions or dependencies.
+- Preserve correctness, security, data integrity, risk controls, and necessary regression tests.
+- If Ponytail is unavailable, follow these principles directly without blocking development.
+
 ## Verification and delivery
 
 - Run focused tests, escalating only when needed.
